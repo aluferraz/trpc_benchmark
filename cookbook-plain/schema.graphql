@@ -1,0 +1,254 @@
+type Query {
+  recipe(id: Int, title: String): RecipeType
+  allRecipes: [RecipeType]
+  recipeingredient(id: Int): RecipeIngredientType
+  allRecipeingredients: [RecipeIngredientType]
+  allGeodata: [GeopraphicDataType]
+  category(id: Int, name: String): CategoryType
+  allCategories: [CategoryType]
+  ingredient(id: Int, name: String): IngredientType
+  allIngredients: [IngredientType]
+  _debug: DjangoDebug
+}
+
+type RecipeType {
+  id: ID!
+  title: String!
+  instructions: String!
+  amounts: [RecipeIngredientType!]!
+}
+
+type RecipeIngredientType {
+  id: ID!
+  recipe: RecipeType!
+  ingredient: IngredientType!
+  amount: Float!
+  unit: RecipesRecipeIngredientUnitChoices!
+}
+
+type IngredientType {
+  id: ID!
+  name: String!
+  notes: String
+  category: CategoryType!
+  usedBy: [RecipeIngredientType!]!
+}
+
+type CategoryType {
+  id: ID!
+  name: String!
+  ingredients: [IngredientType!]!
+}
+
+"""An enumeration."""
+enum RecipesRecipeIngredientUnitChoices {
+  """Units"""
+  UNIT
+
+  """Kilograms"""
+  KG
+
+  """Litres"""
+  L
+
+  """Shots"""
+  ST
+}
+
+type GeopraphicDataType {
+  """"""
+  objectid: BigInt!
+
+  """"""
+  geoid10: BigInt
+
+  """"""
+  geoid20: BigInt
+  statefp: String
+  countyfp: String
+  tractce: String
+  blkgrpce: String
+  csa: String
+  csaName: String
+  cbsa: String
+  cbsaName: String
+  cbsaPop: Int
+  cbsaEmp: Int
+  cbsaWrk: Int
+  acTotal: Float
+  acWater: Float
+  acLand: Float
+  acUnpr: Float
+  totpop: Int
+  counthu: Int
+  hh: Int
+  pWrkage: Float
+  autoown0: Int
+  pctAo0: Float
+  autoown1: Int
+  pctAo1: Float
+  autoown2p: Int
+  pctAo2p: Float
+  workers: Int
+  rLowwagewk: Float
+  rMedwagewk: Float
+  rHiwagewk: Float
+  rPctlowwage: Float
+  totemp: Int
+  e5Ret: String
+  e5Off: String
+  e5Ind: String
+  e5Svc: String
+  e5Ent: String
+  e8Ret: String
+  e8Off: String
+  e8Ind: String
+  e8Svc: String
+  e8Ent: String
+  e8Ed: String
+  e8Hlth: String
+  e8Pub: String
+  eLowwagewk: Int
+  eMedwagewk: Int
+  eHiwagewk: Int
+  ePctlowwage: Float
+  d1a: String
+  d1b: String
+  d1c: String
+  d1c5Ret: String
+  d1c5Off: String
+  d1c5Ind: String
+  d1c5Svc: String
+  d1c5Ent: String
+  d1c8Ret: String
+  d1c8Off: String
+  d1c8Ind: String
+  d1c8Svc: String
+  d1c8Ent: String
+  d1c8Ed: String
+  d1c8Hlth: String
+  d1c8Pub: String
+  d1d: String
+  d1Flag: String
+  d2aJphh: Float
+  d2bE5mix: Float
+  d2bE5mixa: String
+  d2bE8mix: Float
+  d2bE8mixa: String
+  d2aEphhm: Float
+  d2cTrpmx1: String
+  d2cTrpmx2: String
+  d2cTripeq: String
+  d2rJobpop: Float
+  d2rWrkemp: Float
+  d2aWrkemp: Float
+  d2cWremlx: String
+  d3a: Float
+  d3aao: String
+  d3amm: String
+  d3apo: String
+  d3b: Float
+  d3bao: String
+  d3bmm3: String
+  d3bmm4: String
+  d3bpo3: String
+  d3bpo4: String
+  d4a: String
+  d4b025: String
+  d4b050: String
+  d4c: String
+  d4d: String
+  d4e: String
+  d5ar: String
+  d5ae: String
+  d5br: String
+  d5be: String
+  d5cr: String
+  d5cri: String
+  d5ce: String
+  d5cei: String
+  d5dr: String
+  d5dri: String
+  d5de: String
+  d5dei: String
+  d2aRanked: Float
+  d2bRanked: Float
+  d3bRanked: Float
+  d4aRanked: Float
+  natwalkind: String
+  shapeLength: Float
+  shapeArea: Float
+}
+
+"""
+The `BigInt` scalar type represents non-fractional whole numeric values.
+`BigInt` is not constrained to 32-bit like the `Int` type and thus is a less
+compatible type.
+"""
+scalar BigInt
+
+"""Debugging information for the current query."""
+type DjangoDebug {
+  """Executed SQL queries for this API query."""
+  sql: [DjangoDebugSQL]
+
+  """Raise exceptions for this API query."""
+  exceptions: [DjangoDebugException]
+}
+
+"""Represents a single database query made to a Django managed DB."""
+type DjangoDebugSQL {
+  """The type of database being used (e.g. postrgesql, mysql, sqlite)."""
+  vendor: String!
+
+  """The Django database alias (e.g. 'default')."""
+  alias: String!
+
+  """The actual SQL sent to this database."""
+  sql: String
+
+  """Duration of this database query in seconds."""
+  duration: Float!
+
+  """The raw SQL of this query, without params."""
+  rawSql: String!
+
+  """JSON encoded database query parameters."""
+  params: String!
+
+  """Start time of this database query."""
+  startTime: Float!
+
+  """Stop time of this database query."""
+  stopTime: Float!
+
+  """Whether this database query took more than 10 seconds."""
+  isSlow: Boolean!
+
+  """Whether this database query was a SELECT."""
+  isSelect: Boolean!
+
+  """Postgres transaction ID if available."""
+  transId: String
+
+  """Postgres transaction status if available."""
+  transStatus: String
+
+  """Postgres isolation level if available."""
+  isoLevel: String
+
+  """Postgres connection encoding if available."""
+  encoding: String
+}
+
+"""Represents a single exception raised."""
+type DjangoDebugException {
+  """The class of the exception"""
+  excType: String!
+
+  """The message of the exception"""
+  message: String!
+
+  """The stack trace"""
+  stack: String!
+}

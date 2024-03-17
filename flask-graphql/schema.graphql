@@ -1,0 +1,169 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Post {
+    id: ID!
+    title: String!
+    description: String!
+    created_at: String!
+}
+
+type PostResult {
+    success: Boolean!
+    errors: [String]
+    post: Post
+}
+
+type PostsResult {
+    success: Boolean!
+    errors: [String]
+    posts: [Post]
+}
+
+
+type GeopraphicDataType {
+  """"""
+  objectid: BigInt!
+
+  """"""
+  geoid10: BigInt
+
+  """"""
+  geoid20: BigInt
+  statefp: String
+  countyfp: String
+  tractce: String
+  blkgrpce: String
+  csa: String
+  csaName: String
+  cbsa: String
+  cbsaName: String
+  cbsaPop: Int
+  cbsaEmp: Int
+  cbsaWrk: Int
+  acTotal: Float
+  acWater: Float
+  acLand: Float
+  acUnpr: Float
+  totpop: Int
+  counthu: Int
+  hh: Int
+  pWrkage: Float
+  autoown0: Int
+  pctAo0: Float
+  autoown1: Int
+  pctAo1: Float
+  autoown2p: Int
+  pctAo2p: Float
+  workers: Int
+  rLowwagewk: Float
+  rMedwagewk: Float
+  rHiwagewk: Float
+  rPctlowwage: Float
+  totemp: Int
+  e5Ret: String
+  e5Off: String
+  e5Ind: String
+  e5Svc: String
+  e5Ent: String
+  e8Ret: String
+  e8Off: String
+  e8Ind: String
+  e8Svc: String
+  e8Ent: String
+  e8Ed: String
+  e8Hlth: String
+  e8Pub: String
+  eLowwagewk: Int
+  eMedwagewk: Int
+  eHiwagewk: Int
+  ePctlowwage: Float
+  d1a: String
+  d1b: String
+  d1c: String
+  d1c5Ret: String
+  d1c5Off: String
+  d1c5Ind: String
+  d1c5Svc: String
+  d1c5Ent: String
+  d1c8Ret: String
+  d1c8Off: String
+  d1c8Ind: String
+  d1c8Svc: String
+  d1c8Ent: String
+  d1c8Ed: String
+  d1c8Hlth: String
+  d1c8Pub: String
+  d1d: String
+  d1Flag: String
+  d2aJphh: Float
+  d2bE5mix: Float
+  d2bE5mixa: String
+  d2bE8mix: Float
+  d2bE8mixa: String
+  d2aEphhm: Float
+  d2cTrpmx1: String
+  d2cTrpmx2: String
+  d2cTripeq: String
+  d2rJobpop: Float
+  d2rWrkemp: Float
+  d2aWrkemp: Float
+  d2cWremlx: String
+  d3a: Float
+  d3aao: String
+  d3amm: String
+  d3apo: String
+  d3b: Float
+  d3bao: String
+  d3bmm3: String
+  d3bmm4: String
+  d3bpo3: String
+  d3bpo4: String
+  d4a: String
+  d4b025: String
+  d4b050: String
+  d4c: String
+  d4d: String
+  d4e: String
+  d5ar: String
+  d5ae: String
+  d5br: String
+  d5be: String
+  d5cr: String
+  d5cri: String
+  d5ce: String
+  d5cei: String
+  d5dr: String
+  d5dri: String
+  d5de: String
+  d5dei: String
+  d2aRanked: Float
+  d2bRanked: Float
+  d3bRanked: Float
+  d4aRanked: Float
+  natwalkind: String
+  shapeLength: Float
+  shapeArea: Float
+}
+
+"""
+The `BigInt` scalar type represents non-fractional whole numeric values.
+`BigInt` is not constrained to 32-bit like the `Int` type and thus is a less
+compatible type.
+"""
+scalar BigInt
+
+
+type Query {
+    # listPosts: PostsResult!
+    # getPost(id: ID!): PostResult!
+    allGeodata:[GeopraphicDataType]
+}
+
+type Mutation {
+    createPost(title: String!, description: String!, created_at: String): PostResult!
+    updatePost(id: ID!, title: String, description: String): PostResult!
+    deletePost(id: ID): PostResult!
+}
